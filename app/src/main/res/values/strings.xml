@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Tour Guide</string>
+    <string name="category_restaurants">Restaurants</string>
+    <string name="category_museums">Museums</string>
+    <string name="category_landmarks">Landmarks</string>
+    <string name="category_nightlife">Nightlife</string>
+    <string name="location_image">Location Image</string>
+    <string name="dash">-</string>
+    <string name="open_now">Open Now</string>
+    <string name="closed">Closed</string>
+</resources>

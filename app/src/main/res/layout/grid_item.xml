@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="4dp">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/location_image"
+        tools:src="@drawable/ic_launcher_background" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="Location Name" />
+
+        <TextView
+            android:id="@+id/address_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textAlignment="center"
+            tools:text="Address Text" />
+
+        <RatingBar
+            android:id="@+id/rating_bar"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:isIndicator="true"
+            tools:rating="4.5" />
+
+        <TextView
+            android:id="@+id/open_closed_status_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Open/Closed" />
+
+    </LinearLayout>
+
+</LinearLayout>

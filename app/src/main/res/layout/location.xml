@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/location_image"
+            android:paddingBottom="8dp"
+            tools:src="@drawable/ic_launcher_background" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/name_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:textAlignment="center"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                tools:text="Location Name" />
+
+            <TextView
+                android:id="@+id/address_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="italic"
+                tools:text="Address Text" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="-4dp">
+
+                <TextView
+                    android:id="@+id/start_hour_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    tools:text="8:00 AM" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:text="@string/dash"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/stop_hour_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    tools:text="6:00 PM" />
+
+            </LinearLayout>
+
+            <RatingBar
+                android:id="@+id/rating_bar"
+                style="@style/Widget.AppCompat.RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="-16dp"
+                android:isIndicator="true"
+                android:scaleX="0.5"
+                android:scaleY="0.5"
+                tools:rating="4.5" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
