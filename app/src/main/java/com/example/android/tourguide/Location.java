@@ -16,93 +16,92 @@ public class Location implements Parcelable {
             return new Location[size];
         }
     };
-    private String mName;
-    private String mAddress;
-    private String mStartHour;
-    private String mStopHour;
-    private float mRating;
-    private int mImageResourceId;
+
+    private String name;
+    private String address;
+    private String startHour;
+    private String stopHour;
+    private float rating;
+    private int imageResourceId;
 
     public Location(String name, String address, String startHour, String stopHour, float rating, int imageResourceId) {
-        mName = name;
-        mAddress = address;
-        mStartHour = startHour;
-        mStopHour = stopHour;
-        mRating = rating;
-        mImageResourceId = imageResourceId;
+        this.name = name;
+        this.address = address;
+        this.startHour = startHour;
+        this.stopHour = stopHour;
+        this.rating = rating;
+        this.imageResourceId = imageResourceId;
     }
-
-    private Location(Parcel in) {
-        mName = in.readString();
-        mAddress = in.readString();
-        mStartHour = in.readString();
-        mStopHour = in.readString();
-        mRating = in.readFloat();
-        mImageResourceId = in.readInt();
-    }
-
-    public String getName() {
-        return mName;
-    }
-
-    public String getAddress() {
-        return mAddress;
-    }
-
-    public String getStartHour() {
-        return mStartHour;
-    }
-
-    public String getStopHour() {
-        return mStopHour;
-    }
-
-    public float getRating() {
-        return mRating;
-    }
-
-    public int getImageResourceId() {
-        return mImageResourceId;
-    }
-
 
     // In constructor you will read the variables from Parcel. Make sure to read them in the same sequence in which you have written them in Parcel.
 
+    private Location(Parcel in) {
+        name = in.readString();
+        address = in.readString();
+        startHour = in.readString();
+        stopHour = in.readString();
+        rating = in.readFloat();
+        imageResourceId = in.readInt();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getStartHour() {
+        return startHour;
+    }
+
+    public String getStopHour() {
+        return stopHour;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public int getImageResourceId() {
+        return imageResourceId;
+    }
+
     boolean isOpen() {
 
+        if (startHour.equals("Non") && stopHour.equals("Stop"))
+            return true;
+
         Calendar calendar = Calendar.getInstance();
+
         int currentTime = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 
-        if (mStartHour.equals("Non") && mStopHour.equals("Stop"))
+        int startTime = Integer.parseInt(startHour.substring(0, 2)) * 60 + Integer.parseInt(startHour.substring(3, 5));
+
+        int stopTime = Integer.parseInt(stopHour.substring(0, 2)) * 60 + Integer.parseInt(stopHour.substring(3, 5));
+
+        if (startHour.substring(6, 8).equals("PM") && !startHour.substring(0, 2).equals("12"))
+            startTime += 720;
+
+        if (stopHour.substring(6, 8).equals("PM") && !stopHour.substring(0, 2).equals("12"))
+            stopTime += 720;
+
+        if (startHour.substring(6, 8).equals("PM") && stopHour.substring(6, 8).equals("AM"))
+            if ((currentTime >= startTime && currentTime <= 1440) || (currentTime >= 0 && currentTime <= stopTime))
+                return true;
+
+        if (startHour.substring(6, 8).equals("AM") && stopHour.substring(6, 8).equals("AM") && (currentTime >= startTime || currentTime <= stopTime))
             return true;
-        else {
 
-            int startTime = Integer.parseInt(mStartHour.substring(0, 2)) * 60 + Integer.parseInt(mStartHour.substring(3, 5));
+        if (startHour.substring(6, 8).equals("PM") && stopHour.substring(6, 8).equals("PM") && (currentTime >= startTime || currentTime <= stopTime))
+            return true;
 
-            if (mStartHour.substring(6, 8).equals("PM") && !mStartHour.substring(0, 2).equals("12"))
-                startTime += 720;
-
-            int stopTime = Integer.parseInt(mStopHour.substring(0, 2)) * 60 + Integer.parseInt(mStopHour.substring(3, 5));
-
-            if (mStopHour.substring(6, 8).equals("PM") && !mStopHour.substring(0, 2).equals("12"))
-                stopTime += 720;
-
-            if (mStartHour.substring(6, 8).equals("PM") && mStopHour.substring(6, 8).equals("AM"))
-                if ((currentTime >= startTime && currentTime <= 1440) || (currentTime >= 0 && currentTime <= stopTime))
-                    return true;
-
-            if (mStartHour.substring(6, 8).equals("AM") && mStopHour.substring(6, 8).equals("AM") && (currentTime >= startTime || currentTime <= stopTime))
+        if (startHour.substring(6, 8).equals("AM") && stopHour.equals("00:00 AM"))
+            if (currentTime >= startTime && currentTime <= 1440)
                 return true;
 
-            if (mStartHour.substring(6, 8).equals("PM") && mStopHour.substring(6, 8).equals("PM") && (currentTime >= startTime || currentTime <= stopTime))
-                return true;
-
-            if (mStartHour.substring(6, 8).equals("AM") && mStopHour.equals("00:00 AM"))
-                if (currentTime >= startTime && currentTime <= 1440)
-                    return true;
-
-            return currentTime >= startTime && currentTime <= stopTime;
-        }
+        return currentTime >= startTime && currentTime <= stopTime;
     }
 
     // This is to de-serialize the object
@@ -116,11 +115,11 @@ public class Location implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         //Write data in any order
-        dest.writeString(mName);
-        dest.writeString(mAddress);
-        dest.writeString(mStartHour);
-        dest.writeString(mStopHour);
-        dest.writeFloat(mRating);
-        dest.writeInt(mImageResourceId);
+        dest.writeString(name);
+        dest.writeString(address);
+        dest.writeString(startHour);
+        dest.writeString(stopHour);
+        dest.writeFloat(rating);
+        dest.writeInt(imageResourceId);
     }
 }

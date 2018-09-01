@@ -1,57 +1,83 @@
 package com.example.android.tourguide;
 
-import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class LocationAdapter extends ArrayAdapter<Location> {
+public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.LocationViewHolder> {
 
-    LocationAdapter(Activity context, ArrayList<Location> locations) {
-        super(context, 0, locations);
+    private Context context;
+    private ArrayList<Location> locations;
+
+    LocationAdapter(Context context, ArrayList<Location> locations) {
+        this.context = context;
+        this.locations = locations;
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View gridItemView = convertView;
-        if (gridItemView == null) {
-            gridItemView = LayoutInflater.from(getContext()).inflate(R.layout.grid_item, parent, false);
-        }
+    public LocationAdapter.LocationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.grid_item, parent, false);
 
-        Location currentLocation = getItem(position);
-
-        TextView nameTextView = gridItemView.findViewById(R.id.name_text_view);
-        assert currentLocation != null;
-        nameTextView.setText(currentLocation.getName());
-
-        TextView addressTextView = gridItemView.findViewById(R.id.address_text_view);
-        addressTextView.setText(currentLocation.getAddress());
-
-        RatingBar ratingBar = gridItemView.findViewById(R.id.rating_bar);
-        ratingBar.setRating(currentLocation.getRating());
-
-        TextView openClosedStatusTextView = gridItemView.findViewById(R.id.open_closed_status_text_view);
-        if (currentLocation.isOpen()) {
-            openClosedStatusTextView.setText(R.string.open_now);
-            openClosedStatusTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.colorOpen));
-        } else {
-            openClosedStatusTextView.setText(R.string.closed);
-            openClosedStatusTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.colorClosed));
-        }
-
-        ImageView imageView = gridItemView.findViewById(R.id.image);
-        imageView.setImageResource(currentLocation.getImageResourceId());
-
-        return gridItemView;
+        return new LocationViewHolder(view);
     }
+
+    @Override
+    public void onBindViewHolder(@NonNull LocationAdapter.LocationViewHolder locationViewHolder, int position) {
+        // Bind data to the view
+
+        Location currentLocation = locations.get(position);
+
+        locationViewHolder.nameTextView.setText(currentLocation.getName());
+        locationViewHolder.addressTextView.setText(currentLocation.getAddress());
+        locationViewHolder.ratingBar.setRating(currentLocation.getRating());
+
+        if (currentLocation.isOpen()) {
+            locationViewHolder.openClosedStatusTextView.setText(R.string.open_now);
+            locationViewHolder.openClosedStatusTextView.setTextColor(ContextCompat.getColor(context, R.color.colorOpen));
+        } else {
+            locationViewHolder.openClosedStatusTextView.setText(R.string.closed);
+            locationViewHolder.openClosedStatusTextView.setTextColor(ContextCompat.getColor(context, R.color.colorClosed));
+        }
+
+        locationViewHolder.locationImageView.setImageResource(currentLocation.getImageResourceId());
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return locations.size();
+    }
+
+    // Provide a reference to the views for each data item
+    // Complex data items may need more than one view per item, and
+    // you provide access to all the views for a data item in a view holder
+    static class LocationViewHolder extends RecyclerView.ViewHolder {
+        TextView nameTextView;
+        TextView addressTextView;
+        RatingBar ratingBar;
+        TextView openClosedStatusTextView;
+        ImageView locationImageView;
+
+        LocationViewHolder(View itemView) {
+            super(itemView);
+            this.nameTextView = itemView.findViewById(R.id.name_text_view);
+            this.addressTextView = itemView.findViewById(R.id.address_text_view);
+            this.ratingBar = itemView.findViewById(R.id.rating_bar);
+            this.openClosedStatusTextView = itemView.findViewById(R.id.open_closed_status_text_view);
+            this.locationImageView = itemView.findViewById(R.id.image);
+        }
+
+    }
+
 }

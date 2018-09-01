@@ -20,18 +20,19 @@ public class LocationActivity extends AppCompatActivity {
         // Set the content of the activity to use the activity_main.xml layout file
         setContentView(R.layout.location);
 
+        Location currentLocation = getIntent().getParcelableExtra(Constants.keyLocation);
+
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
-        Location location = getIntent().getParcelableExtra("location");
-
-        actionBar.setTitle(location.getName());
+        if (null != actionBar) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(currentLocation.getName());
+        }
 
         final TextView nameTextView = findViewById(R.id.name_text_view);
-        nameTextView.setText(location.getName());
+        nameTextView.setText(currentLocation.getName());
 
         TextView addressTextView = findViewById(R.id.address_text_view);
-        addressTextView.setText(location.getAddress());
+        addressTextView.setText(currentLocation.getAddress());
         addressTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,16 +55,16 @@ public class LocationActivity extends AppCompatActivity {
         });
 
         TextView startHourTextView = findViewById(R.id.start_hour_text_view);
-        startHourTextView.setText(location.getStartHour());
+        startHourTextView.setText(currentLocation.getStartHour());
 
         TextView stopHourTextView = findViewById(R.id.stop_hour_text_view);
-        stopHourTextView.setText(location.getStopHour());
+        stopHourTextView.setText(currentLocation.getStopHour());
 
         RatingBar ratingBar = findViewById(R.id.rating_bar);
-        ratingBar.setRating(location.getRating());
+        ratingBar.setRating(currentLocation.getRating());
 
         ImageView imageView = findViewById(R.id.image);
-        imageView.setImageResource(location.getImageResourceId());
+        imageView.setImageResource(currentLocation.getImageResourceId());
 
     }
 
@@ -78,4 +79,5 @@ public class LocationActivity extends AppCompatActivity {
 
         return (super.onOptionsItemSelected(item));
     }
+
 }
